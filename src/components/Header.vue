@@ -40,11 +40,11 @@ h1 {
 .header_logo {
     background-image: linear-gradient(
         45deg,
-        #d85226 25%,
-        #f79e38 25% 50%,
-        #d85226 50% 75%,
-        #f79e38 75%,
-        #f79e38 100%
+        #fc6e63 25%,
+        #ffae77 25% 50%,
+        #fc6e63 50% 75%,
+        #ffae77 75%,
+        #ffae77 100%
     );
     background-size: 80px 80px;
     display: flex;
