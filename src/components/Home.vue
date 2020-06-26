@@ -16,7 +16,8 @@ export default {
 </script>
 
 <style>
-h2, h3 {
+h2, 
+h3 {
     margin: 2%;
 }
 

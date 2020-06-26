@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppHeader />
+    <app-header />
     <Home />
     <Menu />
   </div>
@@ -15,7 +15,7 @@ import Menu from './components/Menu'
 export default {
   name: 'App',
   components: {
-    AppHeader: Header,
+    appHeader: Header,
     Home,
     Menu
   }

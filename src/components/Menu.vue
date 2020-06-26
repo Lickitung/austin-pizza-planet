@@ -1,10 +1,11 @@
+
 <template>
   <div class="menu_wrapper">
     <!-- menu -->
     <div class="menu">
-      <h3>~ Authentic handmade pizza ~</h3>
-      <table v-for="item in getMenuItems" :key="item.name">
-        <tbody>
+      <h3>~ Authenic handmade pizza ~</h3>
+      <table>
+        <tbody v-for="item in getMenuItems" :key="item.id">
           <tr>
             <td>
               <strong>~ {{ item.name }} ~</strong>
@@ -17,52 +18,25 @@
           </tr>
           <tr v-for="(option, index) in item.options" :key="option[index]">
             <td>{{ option.size }}"</td>
-            <td>${{ option.price }}</td>
+            <td>{{ option.price | currency}}</td>
             <td>
-              <button type="button" class="btn_green">+</button>
+              <button type="button" class="btn_green" @click="addToBasket( item, option )">+</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    {{basket}}
   </div>
 </template>
 
-<style scoped>
-h3 {
-  text-align: center;
-}
-
-.menu-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.menu {
-  background: #f1e6da;
-  border-radius: 3px;
-  height: 100vh;
-  margin: 10px;
-  padding: 10px;
-}
-
-@media screen and (min-width: 900px) {
-  .menu-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .menu {
-    width: 65vw;
-  }
-}
-</style>
-
 <script>
+
 export default {
+  name: "appMenu",
   data() {
     return {
+      basket: [],
       getMenuItems: {
         1: {
           name: "Margherita",
@@ -110,6 +84,56 @@ export default {
         }
       }
     };
+  },
+  methods: {
+    async addToBasket(item, option) {
+      const pizzaExists = await this.basket.find(
+        pizza => pizza.name === item.name && pizza.size === option.size
+      );
+      if (pizzaExists) {
+        pizzaExists.quantity++;
+        return;
+      }
+      this.basket.push({
+        name: item.name,
+        price: option.price,
+        size: option.size,
+        quantity: 1
+      });
+    },
   }
 };
 </script>
+
+<style scoped>
+h3 {
+  text-align: center;
+}
+
+.menu_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu,
+.basket {
+  background: #f1e6da;
+  border-radius: 3px;
+  height: 100vh;
+  margin: 10px;
+  padding: 10px;
+}
+
+@media screen and (min-width: 900px) {
+  .menu_wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .menu {
+    width: 65vw;
+  }
+  .basket {
+    width: 35vw;
+  }
+}
+</style>
